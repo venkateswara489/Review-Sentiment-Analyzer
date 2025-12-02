@@ -35,24 +35,3 @@ python app.py
 ```
 
 Open `http://127.0.0.1:5000` in your browser to try the demo.
-
-## Notes & recommendations
-
-- The dataset `amazon_review_200thousand.csv` is ~90MB; GitHub shows a warning for files larger than 50MB. For collaboration, consider using Git LFS for the dataset and other large artifacts (`.pkl` models).
-- The repo currently does not include trained model files. To share models, either commit them (not recommended) or provide download instructions in the README and keep `models/` in `.gitignore`.
-
-## Contributing
-
-- If you add new files, please avoid committing large binary files directly; use Git LFS or provide external downloads.
-
-## License
-
-Add a license file if you want to make this project open-source. MIT is a common choice.
-
----
-If you'd like, I can:
-- add a `.gitignore` back to ignore `models/`, `venv/`, and `*.pkl` (recommended),
-- migrate the dataset to Git LFS, or
-- add a small GitHub Actions workflow to run a basic test.
-
-Tell me which of these you'd like me to do next.

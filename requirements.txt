@@ -2,3 +2,4 @@ flask>=2.0
 pandas>=1.4
 scikit-learn>=1.0
 numpy>=1.22
+flask-login>=0.6.2
