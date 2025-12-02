@@ -6,7 +6,6 @@ What to include:
 - app.py (Flask application)
 - preprocessing.py (text cleaning and aspect sentiment heuristics)
 - model_training.py (training script for SVM model)
-- inspect_data.py, check_labels.py, test_reviews.py (helper scripts)
 - templates/ and static/ for the front-end
 
 Excluded from repo (added to .gitignore):
