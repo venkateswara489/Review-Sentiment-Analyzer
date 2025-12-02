@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Insights Dashboard - AI-Powered Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">📊</span>
+                <span class="logo-text">Review<span class="highlight">Insights</span></span>
+            </div>
+            <div class="nav-links">
+                <a href="#dashboard" class="nav-link active">Dashboard</a>
+                <a href="#analyze" class="nav-link">Analyze</a>
+                <a href="#insights" class="nav-link">Insights</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">AI-Powered Review Analysis</h1>
+            <p class="hero-subtitle">Understand customer sentiment and product insights instantly with advanced machine
+                learning</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Statistics Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">📈</div>
+                <div class="stat-content">
+                    <div class="stat-value" id="totalReviews">0</div>
+                    <div class="stat-label">Reviews Analyzed</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">🎯</div>
+                <div class="stat-content">
+                    <div class="stat-value">90%</div>
+                    <div class="stat-label">Model Accuracy</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">⚡</div>
+                <div class="stat-content">
+                    <div class="stat-value">&lt;1s</div>
+                    <div class="stat-label">Analysis Time</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">🔍</div>
+                <div class="stat-content">
+                    <div class="stat-value">8</div>
+                    <div class="stat-label">Aspect Categories</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="main-grid">
+            <!-- Left Column - Analysis Input -->
+            <div class="left-column">
+                <div class="card analyzer-card">
+                    <div class="card-header">
+                        <h2 class="card-title">📝 Analyze Review</h2>
+                        <p class="card-subtitle">Paste a product review to get instant sentiment and aspect analysis</p>
+                    </div>
+                    <div class="card-body">
+                        <textarea id="reviewInput" class="review-textarea"
+                            placeholder="Example: 'The battery life is incredible and the camera quality is stunning, but the delivery took forever and customer service was disappointing.'"></textarea>
+                        <button id="analyzeBtn" class="btn-primary">
+                            <span class="btn-text">Analyze Review</span>
+                            <span class="btn-icon">→</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sample Reviews -->
+                <div class="card samples-card">
+                    <div class="card-header">
+                        <h3 class="card-title">💡 Try Sample Reviews</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="sample-item"
+                            data-sample="Amazing product! Battery lasts all day and performance is excellent.">
+                            <div class="sample-badge positive">Positive</div>
+                            <p class="sample-text">Amazing product! Battery lasts all day...</p>
+                        </div>
+                        <div class="sample-item"
+                            data-sample="Terrible experience. Screen quality is poor and delivery was extremely slow.">
+                            <div class="sample-badge negative">Negative</div>
+                            <p class="sample-text">Terrible experience. Screen quality is poor...</p>
+                        </div>
+                        <div class="sample-item"
+                            data-sample="Good camera but overpriced. Sound quality could be better.">
+                            <div class="sample-badge neutral">Mixed</div>
+                            <p class="sample-text">Good camera but overpriced. Sound quality...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Results -->
+            <div class="right-column">
+                <div id="resultsContainer" class="results-hidden">
+                    <!-- Sentiment Result -->
+                    <div class="card result-card">
+                        <div class="card-header">
+                            <h2 class="card-title">🎯 Overall Sentiment</h2>
+                        </div>
+                        <div class="card-body sentiment-body">
+                            <div id="sentimentBadge" class="sentiment-display">
+                                <div class="sentiment-icon">😊</div>
+                                <div id="sentimentText" class="sentiment-text">Positive</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Aspect Analysis -->
+                    <div class="card aspects-card">
+                        <div class="card-header">
+                            <h2 class="card-title">🔍 Feature Analysis</h2>
+                            <p class="card-subtitle">Sentiment breakdown by product aspects</p>
+                        </div>
+                        <div class="card-body">
+                            <div id="aspectsGrid" class="aspects-grid-new">
+                                <!-- Aspects will be injected here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visualization -->
+                    <div class="card chart-card">
+                        <div class="card-header">
+                            <h2 class="card-title">📊 Sentiment Distribution</h2>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="aspectChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Empty State -->
+                <div id="emptyState" class="empty-state">
+                    <div class="empty-icon">🚀</div>
+                    <h3 class="empty-title">Ready to Analyze!</h3>
+                    <p class="empty-text">Enter a review or try a sample to see AI-powered insights</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Insights Section -->
+        <div class="insights-section">
+            <h2 class="section-title">🌟 Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3 class="feature-title">ML-Powered Analysis</h3>
+                    <p class="feature-description">Advanced SVM model trained on 200k+ reviews with 90% accuracy</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Instant Results</h3>
+                    <p class="feature-description">Real-time sentiment classification and aspect detection</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Visual Insights</h3>
+                    <p class="feature-description">Interactive charts and graphs for better understanding</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">Aspect Detection</h3>
+                    <p class="feature-description">Identify sentiment for battery, camera, delivery, and more</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>
