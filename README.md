@@ -1,41 +1,58 @@
-# GEN AI - Review Sentiment Analyzer
+# Review Sentiment Analyzer
 
-This repository contains a lightweight review sentiment analysis project built with Flask and scikit-learn.
+Lightweight sentiment analysis project for product reviews. The repo contains a Flask demo app, a small preprocessing and heuristic aspect-sentiment module, and a training script that shows how to train a TF-IDF + SVM classifier.
 
-What to include:
-- app.py (Flask application)
-- preprocessing.py (text cleaning and aspect sentiment heuristics)
-- model_training.py (training script for SVM model)
-- inspect_data.py, check_labels.py, test_reviews.py (helper scripts)
-- templates/ and static/ for the front-end
+## Contents
 
-Excluded from repo (added to .gitignore):
-- Trained models and vectorizers (models/)
-- Large datasets (amazon_review_200thousand.csv)
-- Pickled files and cached files (*.pkl, __pycache__)
+- `app.py` - Flask web app exposing a `/predict` endpoint and a minimal UI in `templates/` and `static/`.
+- `preprocessing.py` - text cleaning, aspect-based sentiment heuristics, sarcasm detection, and a 3-way label assignment helper.
+- `model_training.py` - example script to prepare data, vectorize text, train an SVM classifier, and save model artifacts (not included).
+- `requirements.txt` - Python dependencies.
+- `amazon_review_200thousand.csv` - dataset (large) used for training. This file is included in the repository as requested, but consider using Git LFS for better handling of large files.
 
-Quick start
------------
-1. Create a virtual environment and install dependencies:
+## Quick start
+
+1. Create and activate a virtual environment (PowerShell):
 
 ```powershell
-python -m venv venv; .\venv\Scripts\Activate.ps1
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 ```
 
-2. Train a model (optional):
+2. (Optional) Train the model locally:
 
 ```powershell
 python model_training.py
 ```
 
-3. Run the app:
+This script reads `amazon_review_200thousand.csv`, prepares 3-way labels using the heuristics in `preprocessing.py`, trains a `LinearSVC` model with TF-IDF features, and writes model artifacts to the `models/` folder. The `models/` folder is intentionally omitted from the repository; add your pickles there if you want the Flask app to load a trained model.
+
+3. Run the Flask app:
 
 ```powershell
 python app.py
 ```
 
-Notes
------
-- If you want to include a sample dataset, add a small `seed_reviews.csv` instead of the full dataset.
-- Trained model files (pickles) are intentionally excluded from the repo; add instructions to your README for how to re-train or how to add your model to the `models/` directory.
+Open `http://127.0.0.1:5000` in your browser to try the demo.
+
+## Notes & recommendations
+
+- The dataset `amazon_review_200thousand.csv` is ~90MB; GitHub shows a warning for files larger than 50MB. For collaboration, consider using Git LFS for the dataset and other large artifacts (`.pkl` models).
+- The repo currently does not include trained model files. To share models, either commit them (not recommended) or provide download instructions in the README and keep `models/` in `.gitignore`.
+
+## Contributing
+
+- If you add new files, please avoid committing large binary files directly; use Git LFS or provide external downloads.
+
+## License
+
+Add a license file if you want to make this project open-source. MIT is a common choice.
+
+---
+If you'd like, I can:
+- add a `.gitignore` back to ignore `models/`, `venv/`, and `*.pkl` (recommended),
+- migrate the dataset to Git LFS, or
+- add a small GitHub Actions workflow to run a basic test.
+
+Tell me which of these you'd like me to do next.
